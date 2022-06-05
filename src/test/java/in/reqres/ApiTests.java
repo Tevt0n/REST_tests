@@ -1,7 +1,6 @@
 package in.reqres;
 
 import org.junit.jupiter.api.Test;
-
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
@@ -69,8 +68,8 @@ public class ApiTests {
     }
 
     @Test
-    void loginWithoutPassword() {
-        String body = "{\"email\": \"eve.holt@reqres.in\"}";
+    void loginWithWrongPassword() {
+        String body = "{\"email\": \"eve.holt@reqres.in\",     \"password\": \"cityslicks\" }";
 
         given()
                 .body(body)
@@ -79,8 +78,7 @@ public class ApiTests {
                 .post("https://reqres.in/api/login")
                 .then()
                 .log().all()
-                .statusCode(400)
-                .body("error", is("Missing password"));
+                .statusCode(401);
 
     }
 
