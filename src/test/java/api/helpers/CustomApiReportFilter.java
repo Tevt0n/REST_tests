@@ -2,7 +2,7 @@ package api.helpers;
 
 import io.qameta.allure.restassured.AllureRestAssured;
 
-public class CustomApiListener {
+public class CustomApiReportFilter {
     private static final AllureRestAssured FILTER = new AllureRestAssured();
 
     public static AllureRestAssured withCustomTemplates() {

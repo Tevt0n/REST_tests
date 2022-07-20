@@ -1,5 +1,8 @@
 package api.tests.reqres;
 
+import api.models.User;
+import api.models.UserData;
+import io.qameta.allure.AllureId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -12,29 +15,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Tag("reqres")
 @DisplayName("Reqres tests")
-public class Tests {
-    @Test
-    @DisplayName("Get list of users")
-    void getListUsers() {
-        given()
-                .spec(request)
-                .when()
-                .get("/users")
-                .then()
-                .log().all()
-                .spec(responseSpec)
-                .body("page", is(1))
-                .body("per_page", is(6))
-                .body("total", is(12))
-                .body("total_pages", is(2));
-    }
+public class ApiTests {
+
+    private final String token = "QpwL5tke4Pnpja7X4";
 
     @Test
+    @AllureId("11474")
     @DisplayName("Create new user")
     void createNewUser() {
-        String body = "{\"name\": \"morpheus\",     \"job\": \"leader\" }";
-
-        given()
+        User body = new User();
+        body.setName("morpheus");
+        body.setJob("leader");
+        User user = given()
                 .spec(request)
                 .body(body)
                 .when()
@@ -42,16 +34,19 @@ public class Tests {
                 .then()
                 .log().all()
                 .statusCode(201)
-                .body("name", is("morpheus"))
-                .body("job", is("leader"));
+                .extract().as(User.class);
+        assertEquals(body.getName(), user.getName());
+        assertEquals(body.getJob(), user.getJob());
     }
 
     @Test
+    @AllureId("11468")
     @DisplayName("Update user info")
     void updateUser() {
-        String body = "{\"name\": \"morpheus\",\"job\": \"zion resident\"}";
-
-        given()
+        User body = new User();
+        body.setName("morpheus");
+        body.setJob("zion resident");
+        User user = given()
                 .spec(request)
                 .body(body)
                 .when()
@@ -59,32 +54,37 @@ public class Tests {
                 .then()
                 .log().all()
                 .spec(responseSpec)
-                .body("name", is("morpheus"))
-                .body("job", is("zion resident"));
+                .extract().as(User.class);
+        assertEquals(body.getName(), user.getName());
+        assertEquals(body.getJob(), user.getJob());
     }
 
     @Test
+    @AllureId("11467")
     @DisplayName("Register new user")
     void registerUser() {
-        String body = "{\"email\": \"eve.holt@reqres.in\", \"password\": \"pistol\" }";
-
+        User user = new User();
+        user.setEmail("eve.holt@reqres.in");
+        user.setPassword("cityslicka");
         given()
                 .spec(request)
-                .body(body)
+                .body(user)
                 .when()
                 .post("/register")
                 .then()
                 .log().all()
                 .spec(responseSpec)
                 .body("id", is(4))
-                .body("token", is("QpwL5tke4Pnpja7X4"));
+                .body("token", is(token));
     }
 
     @Test
+    @AllureId("11471")
     @DisplayName("Log in test")
     void loginTest() {
-        String body = "{\"email\": \"eve.holt@reqres.in\",     \"password\": \"cityslicka\" }";
-
+        User body = new User();
+        body.setEmail("eve.holt@reqres.in");
+        body.setPassword("cityslicka");
         given()
                 .spec(request)
                 .body(body)
@@ -93,20 +93,21 @@ public class Tests {
                 .then()
                 .log().all()
                 .spec(responseSpec)
-                .body("token", is("QpwL5tke4Pnpja7X4"));
+                .body("token", is(token));
     }
 
     @Test
+    @AllureId("11473")
     @DisplayName("Verify user data")
     void verifyUserData() {
-        LombokUserData data = given()
+        UserData data = given()
                 .spec(request)
                 .when()
                 .get("/users/2")
                 .then()
                 .spec(responseSpec)
                 .log().body()
-                .extract().as(LombokUserData.class);
+                .extract().as(UserData.class);
         assertEquals(2, data.getUser().getId());
         assertEquals("janet.weaver@reqres.in", data.getUser().getEmail());
         assertEquals("Janet", data.getUser().getFirstName());

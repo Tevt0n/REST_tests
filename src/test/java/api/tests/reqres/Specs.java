@@ -5,7 +5,7 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
-import static api.helpers.CustomApiListener.withCustomTemplates;
+import static api.helpers.CustomApiReportFilter.withCustomTemplates;
 import static io.restassured.RestAssured.with;
 
 public class Specs {

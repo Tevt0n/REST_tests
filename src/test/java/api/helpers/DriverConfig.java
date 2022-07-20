@@ -11,9 +11,5 @@ public interface DriverConfig extends Config {
     String browserVersion();
     @DefaultValue("http://demowebshop.tricentis.com/")
     String baseUrl();
-    @DefaultValue("http://demowebshop.tricentis.com/")
-    String baseUri();
     String selenoidUrl();
-
-
 }

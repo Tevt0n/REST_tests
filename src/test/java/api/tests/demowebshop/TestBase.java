@@ -24,7 +24,7 @@ public class TestBase {
         Configuration.browserSize =  driverConfig.browserSize();
         Configuration.baseUrl =  driverConfig.baseUrl();
         Configuration.remote = driverConfig.selenoidUrl();
-        RestAssured.baseURI = driverConfig.baseUri();
+        RestAssured.baseURI = driverConfig.baseUrl();
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", true);
@@ -41,4 +41,5 @@ public class TestBase {
             closeWebDriver();
         }
     }
+
 }
