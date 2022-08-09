@@ -32,44 +32,9 @@ public class ApiWithUiTests extends TestBase {
     }
 
     @Test
-    @AllureId("11475")
-    @DisplayName("Verify product added to card with API (log in with cookie)")
-    void addProductToCartWithCookie() {
-        String body = "product_attribute_72_5_18=53" +
-                "&product_attribute_72_6_19=54" +
-                "&product_attribute_72_3_20=57" +
-                "&addtocart_72.EnteredQuantity=1";
-        String authCookieValue = Cookies.getCookie();
-        String cartSize = given()
-                .filter(withCustomTemplates())
-                .contentType("application/x-www-form-urlencoded")
-                .body(body)
-                .cookie(authCookieName, authCookieValue)
-                .log().all()
-                .when()
-                .post("/addproducttocart/details/72/1")
-                .then()
-                .log().all()
-                .statusCode(200)
-                .body("success", is(true))
-                .body("message", is("The product has been added to your <a href=\"/cart\">shopping cart</a>"))
-                .body("updateflyoutcartsectionhtml", notNullValue())
-                .body("updatetopcartsectionhtml", notNullValue())
-                .extract()
-                .path("updatetopcartsectionhtml");
-
-        step("Set cookie to browser", () ->
-            Cookies.setCookieToBrowser(authCookieValue));
-        step("Open main page", () ->
-                open(""));
-        step("Verify cart size", () ->
-                $("#topcartlink .cart-qty").shouldHave(text(cartSize)));
-    }
-
-    @Test
     @AllureId("11472")
-    @DisplayName("Verify product added to card with API (log in with credentials)")
-    void addProductToCartWithCredentials() {
+    @DisplayName("Verify product is added to card with API")
+    void addProductToCartWithApi() {
         String body = "product_attribute_72_5_18=53" +
                 "&product_attribute_72_6_19=54" +
                 "&product_attribute_72_3_20=57" +
