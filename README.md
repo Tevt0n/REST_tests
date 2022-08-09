@@ -1,4 +1,4 @@
-# Automated API tests for [Reqres](http://reqres.in/) and [Demo Web Shop](http://demowebshop.tricentis.com/)
+# Automated API tests for [Reqres](http://reqres.in/) and [DemoWebShop](http://demowebshop.tricentis.com/)
 
 ## :page_with_curl: Content
 
