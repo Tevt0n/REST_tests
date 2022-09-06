@@ -20,9 +20,9 @@ public class TestBase {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
         DriverConfig driverConfig = ConfigFactory.create(DriverConfig.class, System.getProperties());
         Configuration.browser = driverConfig.browser();
-        Configuration.browserVersion =  driverConfig.browserVersion();
-        Configuration.browserSize =  driverConfig.browserSize();
-        Configuration.baseUrl =  driverConfig.baseUrl();
+        Configuration.browserVersion = driverConfig.browserVersion();
+        Configuration.browserSize = driverConfig.browserSize();
+        Configuration.baseUrl = driverConfig.baseUrl();
         Configuration.remote = driverConfig.selenoidUrl();
         RestAssured.baseURI = driverConfig.baseUrl();
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -41,5 +41,4 @@ public class TestBase {
             closeWebDriver();
         }
     }
-
 }

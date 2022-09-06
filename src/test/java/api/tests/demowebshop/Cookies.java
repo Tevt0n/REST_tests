@@ -15,19 +15,19 @@ public class Cookies {
             password = credentials.password(),
             authCookieName = credentials.authCookieName();
 
-    static String getCookie() {
-                    String authCookieValue = given()
-                            .filter(withCustomTemplates())
-                            .contentType("application/x-www-form-urlencoded")
-                            .formParam("Email", login)
-                            .formParam("Password", password)
-                            .log().all()
-                            .when()
-                            .post("/login")
-                            .then()
-                            .log().all()
-                            .statusCode(302)
-                            .extract().cookie(authCookieName);
+    static String getAuthCookie() {
+        String authCookieValue = given()
+                .filter(withCustomTemplates())
+                .contentType("application/x-www-form-urlencoded")
+                .formParam("Email", login)
+                .formParam("Password", password)
+                .log().all()
+                .when()
+                .post("/login")
+                .then()
+                .log().all()
+                .statusCode(302)
+                .extract().cookie(authCookieName);
         return authCookieValue;
     }
 
@@ -35,5 +35,5 @@ public class Cookies {
         open("/Themes/DefaultClean/Content/images/logo.png");
         Cookie authCookie = new Cookie(authCookieName, authCookieValue);
         WebDriverRunner.getWebDriver().manage().addCookie(authCookie);
-        }
     }
+}

@@ -22,7 +22,7 @@ public class ApiWithUiTests extends TestBase {
     @DisplayName("Successful authorization with API")
     void loginWithApiTest() {
         step("Get cookie by API and set it to browser", () -> {
-            String authCookieValue = Cookies.getCookie();
+            String authCookieValue = Cookies.getAuthCookie();
             Cookies.setCookieToBrowser(authCookieValue);
         });
         step("Open main page", () ->
@@ -39,7 +39,7 @@ public class ApiWithUiTests extends TestBase {
                 "&product_attribute_72_6_19=54" +
                 "&product_attribute_72_3_20=57" +
                 "&addtocart_72.EnteredQuantity=1";
-        String authCookieValue = Cookies.getCookie();
+        String authCookieValue = Cookies.getAuthCookie();
         String cartSize = given()
                 .filter(withCustomTemplates())
                 .contentType("application/x-www-form-urlencoded")
